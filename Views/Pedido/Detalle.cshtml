@@ -1,0 +1,58 @@
+﻿@model IDGS903_Espinosa_Jesus_Examen1P.Models.Pedido
+
+@{
+    ViewBag.Title = "Detalle";
+}
+
+<h2 class="text-center">Detalle de Pedido</h2>
+<div class="row text-center" style="padding-top: 1.5rem;">
+    <div class="col-sm-3">
+        <div class="form-group">
+            <label>Cliente: @Model.Cliente.Nombre</label>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="form-group">
+            <label>Dirección: @Model.Cliente.Direccion</label>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="form-group">
+            <label>Teléfono: @Model.Cliente.Telefono</label>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="form-group">
+            <label>Fecha: @Model.FechaPedido.ToString("D")</label>
+        </div>
+    </div>
+</div>
+<div class="row" style="padding-top: 1.5rem;">
+    <table class="table table-hover table-responsive">
+        <thead style="background-color: #101010; color: white;">
+        <th>Tamaño</th>
+        <th>Ingredientes</th>
+        <th>Número de Pizzas</th>
+        <th>Subtotal</th>
+        </thead>
+        <tbody>
+            @foreach (var pizza in Model.Pizzas)
+            {
+                <tr>
+                    <td>@pizza.Tamaño</td>
+                    <td>@string.Join(", ", pizza.Ingredientes)</td>
+                    <td>@pizza.Cantidad</td>
+                    <td>@pizza.Subtotal().ToString("C0")</td>
+                </tr>
+            }
+        <tr style="background-color: #101010; color: white; ">
+            <td colspan="2"></td>
+            <td style="font-weight: bold;" >Total:</td>
+            <td style="font-weight: bold;">@Model.Total().ToString("C0")</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="row text-center" style="padding-top: 1.5rem;" >
+    <button class="btn btn-primary" onclick="document.location.href = 'Ver'" autofocus>Regresar</button>
+</div>

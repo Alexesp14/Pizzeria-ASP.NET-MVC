@@ -1,0 +1,60 @@
+﻿@model IDGS903_Espinosa_Jesus_Examen1P.Models.Pedido
+
+<h2>Agregar Pizzas</h2>
+<div class="row">
+    <form action="Generar" method="post">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label>Nombre</label>
+                    <input class="form-control" type="text" value="@Model.Cliente.Nombre" disabled />
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label>Dirección</label>
+                    <input class="form-control" type="text" value="@Model.Cliente.Direccion" disabled />
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label>Teléfono</label>
+                    <input class="form-control" type="text" value="@Model.Cliente.Direccion" disabled />
+                </div>
+            </div>
+        </div>
+        <div class="row" style="padding-top: 1.5rem;">
+            <div class="col-sm-4">
+                <label>Tamaño Pizza</label>
+                <br />
+                <input id="rbtnChica" type="radio" name="Tamaño" value="Chica" />
+                <label for="rbtnChica">Chica $40</label>
+                <br />
+                <input id="rbtnMediana" type="radio" name="Tamaño" value="Mediana" />
+                <label for="rbtnMediana">Mediana $80</label>
+                <br />
+                <input id="rbtnGrande" type="radio" name="Tamaño" value="Grande" />
+                <label for="rbtnGrande">Grande $120</label>
+            </div>
+            <div class="col-sm-4">
+                <label>Ingredientes</label>
+                <br />
+                <input id="chkJamon" type="checkbox" name="Ingredientes" value="Jamón" />
+                <label for="chkJamon">Jamón $10</label>
+                <br />
+                <input id="chkPiña" type="checkbox" name="Ingredientes" value="Piña" />
+                <label for="chkPiña">Piña $10</label>
+                <br />
+                <input id="chkChampiñones" type="checkbox" name="Ingredientes" value="Champiñones" />
+                <label for="chkChampiñones">Champiñones $10</label>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label># de Pizzas</label>
+                    <input class="form-control" type="text" name="Cantidad" />
+                </div>
+                <input class="btn btn-primary" type="submit" value="Agregar" />
+            </div>
+        </div>
+    </form>
+</div>

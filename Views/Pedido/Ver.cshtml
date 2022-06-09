@@ -1,0 +1,73 @@
+﻿@model List<IDGS903_Espinosa_Jesus_Examen1P.Models.Pedido>
+@using IDGS903_Espinosa_Jesus_Examen1P.Models
+@using System.Text.Json
+@{
+    ViewBag.Title = "Pedidos";
+
+}
+
+<h2>Pedidos</h2>
+<form action="Ver" method="post">
+    <input type="radio" name="filtro" value="Dia" autofocus />
+    <label>Dia</label>
+    <select id="slctDia" class="input-sm" name="dia">
+        <option value="">Selecciona un dia</option>
+        <option value="lunes">lunes</option>
+        <option value="martes">martes</option>
+        <option value="miércoles">miércoles</option>
+        <option value="jueves">jueves</option>
+        <option value="viernes">viernes</option>
+        <option value="sábado">sábado</option>
+        <option value="domingo">domingo</option>
+    </select>
+    <input type="radio" name="filtro" value="Mes" />
+    <label>Mes</label>
+    <select id="slctMes" class="input-sm" name="mes">
+        <option value="0">Selecciona un mes</option>
+        <option value="1">enero</option>
+        <option value="2">febrero</option>
+        <option value="3">marzo</option>
+        <option value="4">abril</option>
+        <option value="5">mayo</option>
+        <option value="6">junio</option>
+        <option value="7">julio</option>
+        <option value="8">agosto</option>
+        <option value="9">septiembre</option>
+        <option value="10">octubre</option>
+        <option value="11">noviembre</option>
+        <option value="12">diciembre</option>
+    </select>
+    <input class="btn btn-primary" type="submit" value="Filtrar" />
+    <a class="btn btn-warning" href="Ver">Reestablecer</a>
+</form>
+<div style="padding-top: 1.5rem;"></div>
+<table class="table table-hover table-responsive">
+    <tr style="background-color: #101010; color: white; ">
+        <th>Nombre</th>
+        <th>Dirección</th>
+        <th>Fecha</th>
+        <th>Total</th>
+        <th>Detalle</th>
+    </tr>
+    <tbody>
+        @{ int i = 0; double gananciaTotal = 0; }
+        @foreach (Pedido p in Model)
+        {
+            gananciaTotal += p.Total();
+        <tr>
+            <td>@p.Cliente.Nombre</td>
+            <td>@p.Cliente.Direccion</td>
+            <td>@p.FechaPedido.ToString("D")</td>
+            <td>@p.Total().ToString("C0")</td>
+            <td><form action="Detalle" method="post"><input type="hidden" name="p" value="@JsonSerializer.Serialize(p)" /><input class="btn-link" type="submit" value="Ver Detalle" /></form></td>
+        </tr>
+            i++;
+        }
+        <tr style="background-color: #101010; color: white; font-weight: bold;">
+            <td colspan="2"></td>
+            <td>Ganancia Total:</td>
+            <td>@gananciaTotal.ToString("C0")</td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>

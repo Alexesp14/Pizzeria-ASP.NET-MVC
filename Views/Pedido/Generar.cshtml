@@ -1,0 +1,178 @@
+﻿@model IDGS903_Espinosa_Jesus_Examen1P.Models.Pedido
+@using IDGS903_Espinosa_Jesus_Examen1P.Models
+@{
+    ViewBag.Title = "Registrar Datos";
+}
+
+@if (Model == null)
+{
+    <h2 class="text-center">Información de cliente</h2>
+    <div class="row" >
+        <form action="Generar" method="post">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label>Nombre</label>
+                        <input class="form-control" type="text" name="Cliente.Nombre" required />
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label>Dirección</label>
+                        <input class="form-control" type="text" name="Cliente.Direccion" required />
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label>Teléfono</label>
+                        <input class="form-control" type="text" name="Cliente.Telefono" required />
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label>Fecha de Pedido</label>
+                        <input class="form-control" type="date" name="FechaPedido" />
+                    </div>
+                </div>
+            </div>
+            <div class="row text-center" style="padding-top: 1.5rem;">
+                <div class="col-sm-4"></div>
+                <div class="col-sm-4">
+                    <input class="btn btn-primary" type="hidden" value="1" name="op" />
+                    <input class="btn btn-primary" type="hidden" value="" name="Tamaño" />
+                    <input class="btn btn-primary" type="hidden" value="" name="listaIngredientes" />
+                    <input class="btn btn-primary" type="hidden" value="0" name="Cantidad" />
+                    <input class="btn btn-primary" type="submit" value="Agregar" />
+                </div>
+                <div class="col-sm-4"></div>
+            </div>
+        </form>
+    </div>
+}
+else
+{
+    <h2 class="text-center" >Agregar Pizzas</h2>
+    <div class="row">
+        @{
+            if (Session["p"] != null)
+            {
+                Pedido p = (Pedido)Session["p"];
+                <div class="row text-center" style="padding-top: 1.5rem;">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label>Cliente: @p.Cliente.Nombre</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label>Dirección: @p.Cliente.Direccion</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label>Teléfono: @p.Cliente.Telefono</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label>Fecha: @p.FechaPedido.ToString("D")</label>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+    <div class="row">
+        <form action="Generar" method="post">
+            <div class="row" style="padding-top: 1.5rem;">
+                <div class="col-sm-4">
+                    <label>Tamaño Pizza</label>
+                    <br />
+                    <input id="rbtnChica" type="radio" name="Tamaño" value="Chica" checked />
+                    <label for="rbtnChica">Chica $40</label>
+                    <br />
+                    <input id="rbtnMediana" type="radio" name="Tamaño" value="Mediana" />
+                    <label for="rbtnMediana">Mediana $80</label>
+                    <br />
+                    <input id="rbtnGrande" type="radio" name="Tamaño" value="Grande" />
+                    <label for="rbtnGrande">Grande $120</label>
+                </div>
+                <div class="col-sm-4">
+                    <label>Ingredientes</label>
+                    <br />
+                    <input id="chkJamon" type="checkbox" name="listaIngredientes" value="Jamón" />
+                    <label for="chkJamon">Jamón $10</label>
+                    <br />
+                    <input id="chkPiña" type="checkbox" name="listaIngredientes" value="Piña" />
+                    <label for="chkPiña">Piña $10</label>
+                    <br />
+                    <input id="chkChampiñones" type="checkbox" name="listaIngredientes" value="Champiñones" />
+                    <label for="chkChampiñones">Champiñones $10</label>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label># de Pizzas</label>
+                        <input class="form-control" type="number" name="Cantidad" required min="1" />
+                    </div>
+                    <input class="btn btn-primary" type="hidden" value="2" name="op" />
+                    <input id="btnAgregar" class="btn btn-primary" type="submit" value="Agregar" />
+                </div>
+            </div>
+        </form>
+        <div class="row" style="padding-top: 1.5rem;">
+            <div class="col-sm-12">
+                @{
+                    if (Session["p"] != null)
+                    {
+                        Pedido p = (Pedido)Session["p"];
+                        if (p.Pizzas.Count > 0)
+                        {
+                            <table class="table table-hover table-responsive">
+                                <thead style="background-color: #101010; color: white;">
+                                <th>Tamaño</th>
+                                <th>Ingredientes</th>
+                                <th>Número de Pizzas</th>
+                                <th>Subtotal</th>
+                                </thead>
+                                <tbody>
+                                    @foreach (var pizza in p.Pizzas)
+                                    {
+                                        <tr>
+                                            <td>@pizza.Tamaño</td>
+                                            <td>@string.Join(", ", pizza.Ingredientes)</td>
+                                            <td>@pizza.Cantidad</td>
+                                            <td>@pizza.Subtotal().ToString("C0")</td>
+                                        </tr>
+                                    }
+                                    <tr style="background-color: #101010; color: white; ">
+                                        <td colspan="2"></td>
+                                        <td style="font-weight: bold;">Total:</td>
+                                        <td style="font-weight: bold;">@p.Total().ToString("C0")</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        }
+                    }
+                }
+            </div>
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4 text-center">
+                @{ 
+                    if(Session["p"] != null)
+                    {
+                        Pedido p = (Pedido)Session["p"];
+                        if(p.Pizzas.Count > 0)
+                        {
+                            <form action="Generar" method="post">
+                                <input type="hidden" value="0" name="Cantidad" />
+                                <input type="hidden" value="3" name="op" />
+                                <input class="btn btn-primary" type="submit" value="Finalizar Pedido" autofocus />
+                            </form>
+                        }
+                    }
+                }
+            </div>
+            <div class="col-sm-4"></div>
+        </div>
+    </div>
+}
